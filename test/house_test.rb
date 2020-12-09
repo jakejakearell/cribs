@@ -42,15 +42,47 @@ class HouseTest < Minitest::Test
     @house.add_room(@room_2)
     @house.add_room(@room_3)
     @house.add_room(@room_4)
+    details = {"price" => 400000, "address" => "123 sugar lane"}
 
-    assert_equal [@room_2, @room_2], @house.rooms_from_category(:bedroom)
+    assert_equal [@room_1, @room_2], @house.rooms_from_category(:bedroom)
 
     assert_equal [@room_4], @house.rooms_from_category(:basement)
 
 
     assert_equal 1900, @house.area
 
-    # assert_equal {"price" => 400000, "address" => "123 sugar lane"}, @house.details
+    assert_equal details, @house.details
 
+  end
+
+  def test_price_per_square_foot
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+
+    assert_equal 210.53, @house.price_per_square_foot
+
+  end
+
+  def test_room_sorted_by_area
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+    rooms = [@room_4, @room_3, @room_2, @room_1]
+
+    assert_equal rooms, @house.rooms_sorted_by_area
+
+  end
+
+  def test_rooms_by_catergory
+    @house.add_room(@room_1)
+    @house.add_room(@room_2)
+    @house.add_room(@room_3)
+    @house.add_room(@room_4)
+    category = {:bedroom=>[@room_1, @room_2], :living_room=> [@room_3], :basement=> [@room_4]}
+
+    assert_equal category, @house.rooms_by_category
   end
 end
