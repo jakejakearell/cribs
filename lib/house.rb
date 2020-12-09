@@ -54,8 +54,56 @@ class House
     details
   end
 
+  def price_per_square_foot
+    ppsf = price / (area * 1.00)
+
+    ppsf.round(2)
+  end
+
+  def rooms_sorted_by_area
+    area =[]
+
+    @rooms.each do |room|
+
+      if area == []
+        area << room
+      elsif room.area > area[0].area
+        area.unshift(room)
+      else
+        area.push(room)
+      end
+
+    end
+
+    area
+
+  end
+
+  def rooms_by_category
+    category = Hash.new
+    types = []
+
+    @rooms.each do |room|
+      types << room.category
+    end
+
+    types = types.uniq
+    rooms = []
+    types.each do |type|
+      rooms = Array.new(3){ rooms_from_category(type)}
+    end
 
 
+    @rooms.each do |room|
+      category[room.category] = [room]
+    end
 
+    category
+
+    # rooms.each do |room|
+    #   category[]
+    # end
+
+  end
 
 end
